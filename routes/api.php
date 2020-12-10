@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['buatcors']], function ($router) {
 
     Route::get('/barangmasuk', 'BarangMasukController@index');
+    Route::get('/barangmasuk/create', 'BarangMasukController@create');
     Route::get('/barangmasuk/{id}', 'BarangMasukController@show');
     Route::post('/barangmasuk', 'BarangMasukController@create');
 
