@@ -21,8 +21,11 @@ class BarangMasukController extends Controller
         //     "NamaBarang"=>$request->NamaBarang,
         //     "Jumlah"    =>$request->Jumlah
         // ]);
+        // no barang = tgl sku urutan
+        $urutan = BarangMasuk::count();
+        $NoBarang = date('Ymd').'sku'.($urutan+1);
         $data = BarangMasuk::create([
-            "NoBarang"  =>$request->NoBarang,
+            "NoBarang"  =>$NoBarang,
             "NamaBarang"=>$request->NamaBarang,
             "Jumlah"    =>$request->Jumlah
         ]);
