@@ -25,10 +25,12 @@ Route::group(['middleware' => ['buatcors']], function ($router) {
     Route::post('/barangmasuk', 'BarangMasukController@create');
 
     Route::get('/barangkeluar', 'BarangKeluarController@index');
+    Route::get('/barangkeluar/create', 'BarangKeluarController@create');
     Route::get('/barangkeluar/{id}', 'BarangKeluarController@index');
     Route::post('/barangkeluar', 'BarangKeluarController@index');
 
     Route::get('/barangreturn', 'BarangReturnController@index');
+    Route::get('/barangreturn/create', 'BarangReturnController@create');
     Route::get('/barangreturn/{id}', 'BarangReturnController@index');
     Route::post('/barangreturn', 'BarangReturnController@index');
 

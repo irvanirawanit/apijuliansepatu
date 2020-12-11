@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\BarangMasuk;
+use App\Models\BarangKeluar;
+use App\Models\BarangReturn;
 
 class BarangMasukController extends Controller
 {
     public function index(Request $request)
     {
-        $data = DB::table('BarangMasuk')->get();
+        // $data = DB::table('BarangMasuk')->get();
+        $data = BarangMasuk::with(['BarangKeluar','BarangReturn'])->get();
         return response()->json($data);
     }
 
@@ -34,7 +37,18 @@ class BarangMasukController extends Controller
 
     public function show(Request $request,$id)
     {
-        $data = DB::table('BarangMasuk')->where('BarangMasukId','=',$id)->first();
+        // $data = DB::table('BarangMasuk')->where('BarangMasukId','=',$id)->first();
+        $data = BarangMasuk::where('NoBarang','=',$id)
+                            // ->with(['BarangKeluar','BarangReturn'])
+                            ->withCount([
+                                        'BarangKeluar'=> function($query) {
+                                            $query->select(DB::raw('SUM(Jumlah)'));
+                                        },
+                                        'BarangReturn'=> function($query) {
+                                            $query->select(DB::raw('SUM(Jumlah)'));
+                                        }
+                                        ])
+                            ->first();
         return response()->json($data);
     }
 }
