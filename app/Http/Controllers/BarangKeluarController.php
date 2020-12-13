@@ -19,20 +19,13 @@ class BarangKeluarController extends Controller
 
     public function create(Request $request)
     {
-        // $data = DB::table('BarangMasuk')->insert([
-        //     "NoBarang"  =>$request->NoBarang,
-        //     "NamaBarang"=>$request->NamaBarang,
-        //     "Jumlah"    =>$request->Jumlah
-        // ]);
-        // no barang = tgl sku urutan
-        $urutan = BarangMasuk::count();
-        $NoBarang = date('Ymd').'sku'.($urutan+1);
-        $data = BarangMasuk::create([
-            "NoBarang"  =>$NoBarang,
-            "NamaBarang"=>$request->NamaBarang,
-            "Jumlah"    =>$request->Jumlah
+        $data = BarangKeluar::create([
+            "BarangMasukId"     => $request->BarangMasukId,
+            "toko"              => $request->toko,
+            "Jumlah"            => $request->Jumlah
         ]);
-        return response()->json($data);
+        $result = BarangKeluar::where('BarangKeluarId',$data->BarangKeluarId)->with(['BarangMasuk'])->first();
+        return response()->json($result);
     }
 
     public function show(Request $request,$id)
